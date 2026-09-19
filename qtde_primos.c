@@ -13,6 +13,9 @@ typedef struct {
 } dados_thread;
 
 int verifica_primo (int num){
+    if (num == 0){
+        return 1;
+    }
     if(num == 1){
         return 0;
     }
@@ -22,32 +25,34 @@ int verifica_primo (int num){
     if(num % 2 == 0){
         return 0;
     }
-    int n = sqrt(num);
-    for(int i = 2; i < n; i++){
-        if(n % i == 0){
+    for(int i = 2; i < num; i++){
+        if(num % i == 0){
             return 0;
         }
     }
     return 1;
 }
 
+/*int main(){
+    int num = 0;
+    verifica_primo(num);
+}*/
 int main(int argc, char* argv[]){
     pthread_t* thread_handles;
     int limite = strtol(argv[1], NULL, 10);
     thread_count = strtol(argv[2], NULL, 10);
-
+    dados_thread dados[thread_count];
     thread_handles = malloc(thread_count*sizeof(pthread_t));
 
     int intervalo = limite/thread_count;
 
     for(int i=0; i < thread_count; i++) {
-
-        inicio = i * intervalo + 1;
+        dados[i].inicio = i * intervalo + 1;
         if(i == thread_count - 1){
-            fim = limite;
+            dados[i].fim = limite;
         }else {
-            fim = (i + 1) * intervalo;
+            dados[i].fim = (i + 1) * intervalo;
         }
-        
+        pthread_create()
     }
 }
