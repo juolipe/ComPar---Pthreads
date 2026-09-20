@@ -7,12 +7,14 @@
 int qtde_primos;
 int thread_count;
 
+// estrtura de dados pra armazenar intervalo e quantidade de primos em cada thread
 typedef struct {
     int inicio;
     int fim;
     int qtde_primos;
 } dados_thread;
 
+// verifica se o numero é primo
 int verifica_primo (int num){
     if (num == 0){
         return 0;
@@ -34,6 +36,7 @@ int verifica_primo (int num){
     return 1;
 }
 
+// função que a thread utiliza para verificar primos
 void* conta_primos(void* argc) {
     dados_thread* dados = (dados_thread*) argc;
 

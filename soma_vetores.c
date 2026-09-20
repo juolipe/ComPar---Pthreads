@@ -7,6 +7,7 @@
 int qtde_primos;
 int thread_count;
 
+// estrutura para alocar vetores e intervalo (dados da thread)
 typedef struct {
     int inicio;
     int fim;
@@ -15,6 +16,7 @@ typedef struct {
     float *C;
 } dados_thread;
 
+// função C[i] = A[i] + B[i]
 void* soma_vetores(void* argc) {
     dados_thread* dados = (dados_thread*) argc;
 
@@ -43,10 +45,12 @@ int main(int argc, char* argv[]){
     float *B;
     float *C;
 
+    // alocação da memória pra cada vetor
     A = malloc(n * sizeof(float));
     B = malloc(n * sizeof(float));
     C = malloc(n * sizeof(float));
 
+    // escrever cada vetor 
     for(int i = 0; i < n; i++) {
         A[i] = i;
         B[i] = i;
@@ -54,7 +58,7 @@ int main(int argc, char* argv[]){
 
     int intervalo = n/thread_count;
 
-  
+    
     for(int i=0; i < thread_count; i++) {
         dados[i].inicio = i * intervalo;
         if(i == thread_count - 1){
@@ -69,7 +73,7 @@ int main(int argc, char* argv[]){
             i,
             dados[i].inicio,
             dados[i].fim);
-      
+        // thread criada
         pthread_create(&thread_handles[i], NULL, soma_vetores, &dados[i]);
     }
 
