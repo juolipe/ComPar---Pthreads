@@ -66,7 +66,12 @@ int main(int argc, char* argv[]){
 
     int intervalo = limite/thread_count;
 
-  
+
+
+    struct timespec inicio, fim;
+
+    clock_gettime(CLOCK_MONOTONIC, &inicio);
+
     for(int i=0; i < thread_count; i++) {
         dados[i].inicio = i * intervalo + 1;
         if(i == thread_count - 1){
@@ -87,7 +92,13 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < thread_count; i++) {
         pthread_join(thread_handles[i], NULL);  
     }      
+    clock_gettime(CLOCK_MONOTONIC, &fim);
 
+    double tempo =
+        (fim.tv_sec - inicio.tv_sec) +
+        (fim.tv_nsec - inicio.tv_nsec) / 1e9;
+
+    printf("Tempo: %.6f segundos\n", tempo);
     int qtde_primos = 0;
 
     for(int i = 0; i < thread_count; i++) {
